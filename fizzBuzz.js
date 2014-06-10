@@ -1,74 +1,84 @@
 $(document).ready(function(){
                 
-                var inputNumber;
+    var inputNumber;
                 
-                $('#number').keyup(function(e){
-                                var key = e.keyCode
-                                if(key == 13) {
-                                                event.preventDefault();
-                                                getNumber();
-                                };
-                });           
+    $('#number').keyup(function(e){
+        var key = e.keyCode
+            if(key == 13) {
+                event.preventDefault();
+                getNumber();
+                };
+            });           
                 
-                $('#addNumber').click(function(){
-                                getNumber();
-                }); 
+    $('#addNumber').click(function(){
+        getNumber();
+    }); 
                 
-                function getNumber(){
+    function getNumber(){
                                 
-                                var fizzAgain = true;
+        var fizzAgain;
                                 
-                                inputNumber = $('#number').val();
+        inputNumber = $('#number').val();
                 
-                                do{
+        do{
                                                                                 
-                                                if(isNaN(inputNumber)){
-                                                                alert(inputNumber + ' is not a number\nPlease enter a valid number');
-                                                                $('#number').val("");
-                                                                $('#number').empty();                                  
+            if(isNaN(inputNumber)){
+                alert(inputNumber + ' is not a number\nPlease enter a valid number');
+                $('#number').val("");
+                $('#number').empty();
+                fizzAgain = false;                               
                                                                 
-                                                } else {
-                                                                $('.fizzBuzz').append('<b><br><br>FizzBuzz or Bust from 1 to ' + inputNumber + '<br></b>');                                       
-                                                                $('#number').prop('disabled', true);
-                                                                $('#addNumber').prop('disabled', true);
-                                                                fizzBust(inputNumber);
-                                                }
-                                                                
-                                                fizzAgain = confirm("Would like to FizzBuzz another number?");
+            } else {
+                $('.fizzBuzz').append('<b><br><br>FizzBuzz or Bust from 1 to ' + inputNumber + '<br></b>');                                       
+                $('#number').prop('disabled', true);
+                $('#addNumber').prop('disabled', true);
+                fizzBuzz(inputNumber);
+                fizzAgain = true;
+            }
+                if (fizzAgain) {
+
+                	fizzAgain = confirm("Would like to FizzBuzz another number?");
                                                 
-                                                if(fizzAgain === true){
-                                                                //alert('Let\' Fizz again!!!');
-                                                                fizzAgain = false;
-                                                                location.reload();
-                                                                                                                                
-                                                } else{
-                                                                //alert('Bye!!!');
-                                                                fizzAgain = false;                                              
-                                                }
+	                if(fizzAgain === true){
+	                    //alert('Let\' Fizz again!!!');
+	                    fizzAgain = false;
+	                    location.reload();
+	                                                                                                                                
+	                } else{
+	                    //alert('Bye!!!');
+	                    fizzAgain = false;
+	                    $('#startOver').show();
+	                    $('#startOver').click(function(){
+	                    	location.reload();
+	                    });                                              
+	                }
+
+                };                                                
+                
                                                 
-                                }while(fizzAgain);
-                }
+        }while(fizzAgain);
+    }
                 
-                function fizzBust(num){                
+    function fizzBuzz(num){                
                                 
-                                                for(i=1; i<=num; i++){
-                                                                $('.fizzBuzz').append('<br>'+ i + ' : ' + checkFizzBust(i) +'<br>');
-                                                }                                              
-                }
+        for(i=1; i<=num; i++){
+            $('.fizzBuzz').append('<br>'+ i + ' : ' + checkFizzBuzz(i) +'<br>');
+        }                                              
+    }
                 
-                function checkFizzBust(value){
+    function checkFizzBuzz(value){
                                 
-                                                if(((value % 3) === 0) && ((value % 5) === 0)){
-                                                                return '<font color="purple">FizzBuzz</font>';
+        if(((value % 3) === 0) && ((value % 5) === 0)){
+            return '<font color="purple">FizzBuzz</font>';
                                                                 
-                                                } else if ((value % 3) === 0){
-                                                                return '<font color="blue">Fizz</font>';
+        } else if ((value % 3) === 0){
+            return '<font color="blue">Fizz</font>';
                                                                 
-                                                } else if ((value % 5) === 0){
-                                                                return '<font color="green">Buzz</font>';
+        } else if ((value % 5) === 0){
+            return '<font color="green">Buzz</font>';
                                                                 
-                                                } else {
-                                                                return '<font color="red">Neither Fizz nor Buzz nor FizzBuzz... Just </font>' + value;
-                                                }
-                }
+        } else {
+        	return '<font color="red">Neither Fizz nor Buzz nor FizzBuzz... Just </font>' + value;
+        }
+    }
 });
